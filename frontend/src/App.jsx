@@ -76,9 +76,15 @@ const App = () => {
   // --- Login via IBM W3ID OAuth ---
   const handleLogin = () => {
     const redirectUri = encodeURIComponent(window.location.origin);
-    // Using a common IBM client ID for IBM internal applications
-    const clientId = 'ibm-oauth-bss-client';
-    const loginUrl = `https://iam.ibm.com/oauth/authorize?response_type=id_token token&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid&nonce=${Date.now()}`;
+    // Standard IBM W3ID OAuth endpoint
+    const clientId = 'ibm-oauth-bss-client'; // This might need to be configured for your app
+    const loginUrl = `https://login.ibm.com/oidc/endpoint/default/authorize?` +
+      `response_type=code` +
+      `&client_id=${clientId}` +
+      `&redirect_uri=${redirectUri}` +
+      `&scope=openid%20email%20profile` +
+      `&state=${Date.now()}` +
+      `&nonce=${Math.random().toString(36).substring(2)}`;
     window.location.href = loginUrl;
   };
 
